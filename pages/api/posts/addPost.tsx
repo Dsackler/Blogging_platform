@@ -37,7 +37,7 @@ export default async function handler(
         },
       });
       res.status(200).json(result);
-    } catch (error) {
+    } catch (err) {
       res.status(403).json({ err: 'Error has occured while making a post' });
     }
   }

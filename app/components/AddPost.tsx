@@ -2,12 +2,11 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 export default function CreatePost() {
   const [title, setTitle] = useState('');
   const [isDisabled, setIsDIsabled] = useState(false);
-
-  // const queryClient = useQueryClient();
 
   //create a post
   const { mutate } = useMutation(
@@ -16,6 +15,7 @@ export default function CreatePost() {
       onError: (error) => {
         const errorMessage = (error as Error).message;
         console.log('Axios error:', errorMessage);
+        toast.error(error?.response?.data.message); //this goes to toaster in the querywrapper file
       },
       onSuccess: (data) => {
         console.log(data);
