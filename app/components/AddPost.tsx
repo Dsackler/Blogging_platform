@@ -1,13 +1,37 @@
 'use client';
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
 
 export default function CreatePost() {
   const [title, setTitle] = useState('');
   const [isDisabled, setIsDIsabled] = useState(false);
 
+  // const queryClient = useQueryClient();
+
+  //create a post
+  const { mutate } = useMutation(
+    async (title: string) => await axios.post('/api/posts/addPost', { title }),
+    {
+      onError: (error) => {
+        const errorMessage = (error as Error).message;
+        console.log('Axios error:', errorMessage);
+      },
+      onSuccess: (data) => {
+        console.log(data);
+        setTitle(''); //reset the title
+        setIsDIsabled(false);
+      },
+    }
+  );
+  const submitPost = async (e: React.FormEvent) => {
+    e.preventDefault(); //stops page from refreshing when you press the button
+    setIsDIsabled(true);
+    mutate(title);
+  };
+
   return (
-    <form className='bg-white my-8 p-8 rounded-md'>
+    <form onSubmit={submitPost} className='bg-white my-8 p-8 rounded-md'>
       <div className='flex flex-col my-4'>
         <textarea
           onChange={(e) => setTitle(e.target.value)}
