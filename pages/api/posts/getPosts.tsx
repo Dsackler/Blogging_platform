@@ -1,17 +1,23 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../../prisma/client';
 
+type PostInclude = {
+  user: true;
+  comments: true;
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   if (req.method === 'GET') {
-    //fetch all psots
+    //fetch all posts
     try {
       const data = await prisma.post.findMany({
         include: {
           user: true,
-        },
+          comments: true,
+        } as PostInclude,
         orderBy: {
           createdAt: 'desc',
         },
