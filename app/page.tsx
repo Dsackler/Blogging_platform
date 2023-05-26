@@ -3,7 +3,7 @@ import AddPost from './components/AddPost';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import Post from './components/Post';
-import { PostType } from './types/posts';
+import { PostType } from './types/Posts';
 
 //Fetch posts
 const allPosts = async () => {
