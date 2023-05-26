@@ -1,11 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../../prisma/client';
 
-type PostInclude = {
-  user: true;
-  comments: true;
-};
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -17,7 +12,7 @@ export default async function handler(
         include: {
           user: true,
           comments: true,
-        } as PostInclude,
+        },
         orderBy: {
           createdAt: 'desc',
         },
